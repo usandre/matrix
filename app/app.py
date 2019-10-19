@@ -20,14 +20,15 @@ def default():
 
 
 # get matrix
-@app.route('/load/<string:instrument>/<string:number1>/<string:number2>', methods=['GET','POST','PUT'])
-def generate_matrix(instrument, number1, number2):
+@app.route('/load/<string:instrument>/<string:number1>/<string:number2>/<string:date>', methods=['GET','POST','PUT'])
+def generate_matrix(instrument, number1, number2, date):
     code = 200
     m = template(1,2)
-    matrix = {"matrix": m.generate(), "tag": "latest"}
+    matrix = {"matrix": m.generate(), "tag": "latest", "date" : date}
+    link = "http://" + request.headers['host'] + "/matrix/" + instrument + "/" + date
     # record = {'matrix': matrix, 'range' : dict(request.headers)}
     model.save(instrument, matrix)
-    return jsonify({instrument: 'OK', 'saved': 'link'}), code
+    return jsonify({instrument: 'OK', 'link': link}), code
 
 
 # get matrixes

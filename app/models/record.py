@@ -29,7 +29,7 @@ class record():
         return True
 
     def get_by_id(self, collection_id, id):
-        item = self.db[collection_id].find_one({"id" : id}, {"_id": 0})
+        item = self.db[collection_id].find_one({"date" : id}, {"_id": 0})
         if item is None:
             item = self.db[collection_id].find_one({"tag": id}, {"_id": 0})
         return item
