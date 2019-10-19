@@ -1,0 +1,7 @@
+cryptography
+Flask
+itsdangerous
+Jinja2
+pymongo
+Werkzeug
+pyOpenSSL
