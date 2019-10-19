@@ -2,6 +2,8 @@ from flask import Flask, redirect, url_for, request, render_template, jsonify, m
 from pymongo import MongoClient
 from entities.container import container
 from models.record import record
+from models.template import template
+import json
 
 app = Flask(__name__)
 
@@ -14,16 +16,28 @@ model = record(storage)
 
 @app.route('/')
 def default():
-    return jsonify({'open': 'OK'})
+    return jsonify({'Contact': 'Andrei'})
 
-# LISTING
+
+# get matrix
+@app.route('/load/<string:instrument>/<string:number1>/<string:number2>', methods=['GET','POST','PUT'])
+def generate_matrix(instrument, number1, number2):
+    code = 200
+    m = template(1,2)
+    matrix = {"matrix": m.generate(), "tag": "latest"}
+    # record = {'matrix': matrix, 'range' : dict(request.headers)}
+    model.save(instrument, matrix)
+    return jsonify({instrument: 'OK', 'saved': 'link'}), code
+
+
+# get matrixes
 @app.route('/matrix', methods=['GET'])
 @app.route('/matrix/', methods=['GET'])
 def get_all():
     output = model.list_buckets()
     return jsonify(output)
 
-# Webhooks
+# get matrix
 @app.route('/matrix/<string:sub_id>', methods=['POST','PUT'])
 def new_item(sub_id='default'):
     code = 200
