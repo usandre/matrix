@@ -8,7 +8,9 @@ class template():
         self.var2 = float(var2)
 
         self.range = float(range)
-        self.limit = 0.366666
+        self.limit_min = 0.36666
+        self.limit_max = 3.6
+
 
         self.fibo =[1.618, 1.5,
                1.382, 1.236, 1.145, 1,
@@ -32,9 +34,22 @@ class template():
         for idx in range(0, lim):
                 thiselem = self.price_levels[idx]
                 nextelem = self.price_levels[idx + 1]
-                self.open_points.append( round((thiselem - nextelem) * 0.764 + nextelem, 5) )
-                self.open_points.append(round((thiselem - nextelem) * 0.236 + nextelem, 5) )
+                pos1 = round((thiselem - nextelem) * 0.764 + nextelem, 5)
+                pos2 = round((thiselem - nextelem) * 0.236 + nextelem, 5)
+
+                self.open_points.append(pos1)
+                self.open_points.append(pos2)
+
+                self.matrix.append(self.construct_line(pos1,thiselem,self.limit_min, 'BUY'))
+                self.matrix.append(self.construct_line(pos1,self.limit_max,self.limit_min, 'SELL'))
+                self.matrix.append(self.construct_line(pos2,self.limit_max,self.limit_min, 'BUY'))
+                self.matrix.append(self.construct_line(pos2,self.limit_max,nextelem, 'SELL'))
+
+
         return self.open_points
+
+    def construct_line(self, pos, tp, sl, type):
+        return ','.join([str(pos), str(tp), str(sl), str(type)])
 
     def printMatrix(self, m):
         a = ""
@@ -56,9 +71,9 @@ class template():
         self.generate_price_levels()
         self.generate_position_points()
 
-        for position in self.open_points:
-            self.matrix.append(','.join([str(position), str(self.range), str(self.limit), 'BUY' ]))
-            self.matrix.append(','.join([str(position), str(self.range), str(self.limit), 'SELL']))
+        # for position in self.open_points:
+        #    self.matrix.append(','.join([str(position), str(self.range), str(self.limit_min), 'BUY' ]))
+        #    self.matrix.append(','.join([str(position), str(self.range), str(self.limit_max), 'SELL']))
         return self.matrix
 
 
