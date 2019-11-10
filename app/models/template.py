@@ -24,7 +24,7 @@ class template():
 
     def generate_price_levels(self):
         for number in self.fibo:
-            level = round(number * self.range + self.var1, 4)
+            level = round(number * self.range + self.var1, 5)
             self.price_levels.append(level)
         return self.price_levels
 
@@ -76,6 +76,6 @@ class template():
         return self.matrix
 
 
-# t = template('1.1','1.2')
+# t = template('1.2516','1.2983')
 # print(t.generateLevel())
 # print(t.generate())
