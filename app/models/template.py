@@ -34,16 +34,19 @@ class template():
         for idx in range(0, lim):
                 thiselem = self.price_levels[idx]
                 nextelem = self.price_levels[idx + 1]
-                pos1 = round((thiselem - nextelem) * 0.764 + nextelem, 5)
-                pos2 = round((thiselem - nextelem) * 0.236 + nextelem, 5)
+                pos1 = thiselem
+                pos2 = round((thiselem - nextelem) * 0.764 + nextelem, 5)
+                pos3 = round((thiselem - nextelem) * 0.618 + nextelem, 5)
+                pos4 = round((thiselem - nextelem) * 0.382 + nextelem, 5)
+                pos5 = round((thiselem - nextelem) * 0.236 + nextelem, 5)
+                pos6 = nextelem
 
-                self.open_points.append(pos1)
-                self.open_points.append(pos2)
-
-                self.matrix.append(self.construct_line(pos1,thiselem,self.limit_min, 'BUY'))
-                self.matrix.append(self.construct_line(pos1,self.limit_max,pos2, 'SELL'))
-                self.matrix.append(self.construct_line(pos2,pos1,self.limit_min, 'BUY'))
-                self.matrix.append(self.construct_line(pos2,self.limit_max,nextelem, 'SELL'))
+                self.matrix.append(self.construct_line(pos1, self.limit_max, pos2, 'SELL'))
+                self.matrix.append(self.construct_line(pos2, pos1, self.limit_min, 'BUY'))
+                self.matrix.append(self.construct_line(pos3, self.limit_max, pos4, 'SELL'))
+                self.matrix.append(self.construct_line(pos4, pos3,  self.limit_min, 'BUY'))
+                self.matrix.append(self.construct_line(pos5, self.limit_max, pos6, 'SELL'))
+                self.matrix.append(self.construct_line(pos6, pos5, self.limit_min, 'BUY'))
 
 
         return self.open_points
