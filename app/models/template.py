@@ -41,8 +41,8 @@ class template():
                 self.open_points.append(pos2)
 
                 self.matrix.append(self.construct_line(pos1,thiselem,self.limit_min, 'BUY'))
-                self.matrix.append(self.construct_line(pos1,self.limit_max,self.limit_min, 'SELL'))
-                self.matrix.append(self.construct_line(pos2,self.limit_max,self.limit_min, 'BUY'))
+                self.matrix.append(self.construct_line(pos1,self.limit_max,pos2, 'SELL'))
+                self.matrix.append(self.construct_line(pos2,pos1,self.limit_min, 'BUY'))
                 self.matrix.append(self.construct_line(pos2,self.limit_max,nextelem, 'SELL'))
 
 
@@ -73,6 +73,6 @@ class template():
         return self.matrix
 
 
-# t = template('1.1','1.2')
+t = template('1.1','1.2')
 # print(t.generateLevel())
-# print(t.generate())
+print(t.generate())
