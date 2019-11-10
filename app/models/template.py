@@ -3,11 +3,11 @@ from random import randint
 
 class template():
 
-    def __init__(self, var1, var2, range):
+    def __init__(self, var1, var2):
         self.var1 = float(var1)
         self.var2 = float(var2)
 
-        self.range = float(range)
+        self.range = abs(float(var2) - float(var1))
         self.limit_min = 0.36666
         self.limit_max = 3.6
 
@@ -70,13 +70,9 @@ class template():
     def generateLevel(self):
         self.generate_price_levels()
         self.generate_position_points()
-
-        # for position in self.open_points:
-        #    self.matrix.append(','.join([str(position), str(self.range), str(self.limit_min), 'BUY' ]))
-        #    self.matrix.append(','.join([str(position), str(self.range), str(self.limit_max), 'SELL']))
         return self.matrix
 
 
-# t = template('1.1','1.2','0.1')
+# t = template('1.1','1.2')
 # print(t.generateLevel())
 # print(t.generate())
